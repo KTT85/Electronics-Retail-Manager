@@ -31,7 +31,7 @@ const Inventory = () => {
     setShowDetailModal(true);
   };
 
-  // Hàm chuyển từ Chi tiết sang Chỉnh sửa (Đóng chi tiết, mở chỉnh sửa)
+  // Hàm chuyển từ Chi tiết sang Chỉnh sửa
   const handleOpenEdit = () => {
     setShowDetailModal(false);
     setShowEditModal(true);
@@ -98,7 +98,7 @@ const Inventory = () => {
         </table>
       </div>
 
-      {/* --- MODAL CHI TIẾT SẢN PHẨM (Ảnh 1) --- */}
+      {/* --- MODAL CHI TIẾT SẢN PHẨM --- */}
       {showDetailModal && selectedProduct && (
         <div style={modalOverlayStyle}>
           <div style={{ ...modalContentStyle, width: '850px', maxHeight: '90vh', overflowY: 'auto' }}>
@@ -144,7 +144,7 @@ const Inventory = () => {
         </div>
       )}
 
-      {/* --- MODAL 2: CHỈNH SỬA SẢN PHẨM (Chuẩn Ảnh 2) --- */}
+      {/* --- MODAL CHỈNH SỬA SẢN PHẨM --- */}
       {showEditModal && selectedProduct && (
         <div style={modalOverlayStyle}>
           <div style={{ ...modalContentStyle, width: '550px', maxHeight: '90vh', overflowY: 'auto', padding: '30px' }}>
@@ -175,7 +175,7 @@ const Inventory = () => {
         </div>
       )}
 
-      {/* MODAL KIỂM KÊ (BÁO CÁO) */}
+      {/* MODAL KIỂM KÊ */}
       {showReportModal && (
         <div style={modalOverlayStyle}>
           <div style={{ ...modalContentStyle, width: '500px', padding: 0, overflow: 'hidden' }}>
@@ -198,7 +198,7 @@ const Inventory = () => {
         </div>
       )}
 
-      {/* BÁO CÁO TỒN KHO - CHI TIẾT */}
+      {/* --- BÁO CÁO TỒN KHO - XEM DỮ LIỆU (ĐÃ FIX LỖI TÀNG HÌNH CỘT) --- */}
       {showDataView && (
         <div style={modalOverlayStyle}>
           <div style={{ ...modalContentStyle, width: '95%', maxWidth: '1150px', maxHeight: '90vh', overflowY: 'auto' }}>
@@ -207,35 +207,54 @@ const Inventory = () => {
               <X onClick={() => setShowDataView(false)} style={{ cursor: 'pointer' }} />
             </div>
             <div style={{ border: '1px solid #e5e7eb', borderRadius: '12px', overflow: 'hidden' }}>
-              <table className="data-table" style={{ margin: 0 }}>
-                <thead style={{ background: '#2563eb' }}>
-                  <tr style={{color: 'white'}}>
-                    <th style={{color: 'white'}}>Mã SP</th><th style={{color: 'white'}}>Tên sản phẩm</th><th style={{color: 'white'}}>Danh mục</th><th style={{color: 'white'}}>Giá bán (VNĐ)</th><th style={{color: 'white'}}>Tồn kho</th><th style={{color: 'white'}}>Giá trị (VNĐ)</th><th style={{color: 'white'}}>Nhà cung cấp</th>
+              <table className="data-table" style={{ margin: 0, width: '100%', borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr>
+                    {/* Ép cứng màu nền xanh dương và chữ trắng cho từng ô th */}
+                    <th style={reportThStyle}>MÃ SP</th>
+                    <th style={reportThStyle}>TÊN SẢN PHẨM</th>
+                    <th style={reportThStyle}>DANH MỤC</th>
+                    <th style={reportThStyle}>GIÁ BÁN (VNĐ)</th>
+                    <th style={{ ...reportThStyle, textAlign: 'center' }}>TỒN KHO</th>
+                    <th style={reportThStyle}>GIÁ TRỊ (VNĐ)</th>
+                    <th style={reportThStyle}>NHÀ CUNG CẤP</th>
                   </tr>
                 </thead>
                 <tbody>
                   {stockData.map((item) => (
                     <tr key={item.id}>
-                      <td>{item.id}</td><td>{item.name}</td><td>{item.cat}</td><td>{item.price}</td><td style={{textAlign: 'center'}}>{item.stock}</td><td>{item.value}</td><td>{item.supplier}</td>
+                      <td style={{ padding: '12px' }}>{item.id}</td>
+                      <td style={{ padding: '12px', fontWeight: '600' }}>{item.name}</td>
+                      <td style={{ padding: '12px' }}>{item.cat}</td>
+                      <td style={{ padding: '12px' }}>{item.price}</td>
+                      <td style={{ padding: '12px', textAlign: 'center' }}>{item.stock}</td>
+                      <td style={{ padding: '12px' }}>{item.value}</td>
+                      <td style={{ padding: '12px' }}>{item.supplier}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              <div style={{ background: '#f9fafb', padding: '15px 20px', fontSize: '13px', color: '#4b5563', borderTop: '1px solid #e5e7eb' }}>Tổng số bản ghi: {stockData.length}</div>
+              <div style={{ background: '#f9fafb', padding: '15px 20px', fontSize: '13px', color: '#4b5563', borderTop: '1px solid #e5e7eb' }}>
+                Tổng số bản ghi: {stockData.length}
+              </div>
             </div>
-            <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'flex-end' }}><button onClick={() => setShowDataView(false)} style={btnBlueStyle}>Đóng</button></div>
+            <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'flex-end' }}>
+              <button onClick={() => setShowDataView(false)} style={btnBlueStyle}>Đóng</button>
+            </div>
           </div>
         </div>
       )}
 
-      {/* Nhập/Xuất Modal giữ nguyên logic cũ */}
+      {/* Nhập/Xuất Modal */}
       {showImportModal && <ModalLayout title="Nhập kho" onClose={() => setShowImportModal(false)} btnText="Nhập kho" />}
       {showExportModal && <ModalLayout title="Xuất kho" onClose={() => setShowExportModal(false)} btnText="Xuất kho" isExport />}
     </div>
   );
 };
 
-// --- HELPERS ---
+// --- HELPERS & STYLES ---
+const reportThStyle = { background: '#2563eb', color: 'white', fontWeight: '600', padding: '15px', textAlign: 'left' };
+
 const ModalLayout = ({ title, onClose, btnText, isExport }) => (
   <div style={modalOverlayStyle}>
     <div style={modalContentStyle}>

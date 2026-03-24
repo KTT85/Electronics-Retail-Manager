@@ -10,11 +10,17 @@ import Settings from './pages/Settings';
 import POSScreen from './pages/POSScreen';
 import Categories from './pages/Categories';
 import Suppliers from './pages/Suppliers';
+import Employees from './pages/Employees';
+import Auth from './pages/Auth';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Đường dẫn Đăng nhập */}
+        <Route path="/login" element={<Auth />} />
+
+        {/* Cụm chức năng của Admin */}
         <Route path="/" element={<AdminLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="don-hang" element={<Orders />} />
@@ -24,8 +30,11 @@ function App() {
           <Route path="bao-cao" element={<Reports />} />
           <Route path="cai-dat" element={<Settings />} />
           <Route path="danh-muc" element={<Categories />} />
-          <Route path="nha cung cap" element={<Suppliers />} />
+          <Route path="nha-cung-cap" element={<Suppliers />} />
+          <Route path="nhan-vien" element={<Employees />} />
         </Route>
+        
+        {/* Đường dẫn Màn hình thu ngân */}
         <Route path="/pos" element={<POSScreen />} />
       </Routes>
     </BrowserRouter>
