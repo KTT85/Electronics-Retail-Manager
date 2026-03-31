@@ -32,7 +32,7 @@ const Sidebar = () => {
   return (
     <aside className="sidebar">
       <div className="logo-wrapper">
-        <h2 style={{ fontSize: '18px', fontWeight: '800' }}>NẾP CÁI POS</h2>
+        <h2 style={{ fontSize: '18px', fontWeight: '800' }}>Cua hang ban le</h2>
       </div>
       <nav className="nav-links">
         {menuItems.map((item) => (
